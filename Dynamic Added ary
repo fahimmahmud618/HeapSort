@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include<stdlib.h>
+  
+  void swap(int *n1, int *n2) {
+    int temp = *n1;
+    *n1 = *n2;
+    *n2 = temp;
+  }
+  
+  void heapify(int arr[], int n, int i) {
+    int max_now = i;
+    int left_c = 2 * i + 1;
+    int right_c = 2 * i + 2;
+  
+    if (left_c < n && arr[left_c] < arr[max_now])
+      max_now = left_c;
+  
+    if (right_c < n && arr[right_c] < arr[max_now])
+      max_now = right_c;
+  
+    if (max_now != i) {
+      swap(&arr[i], &arr[max_now]);
+      heapify(arr, n, max_now);
+    }
+  }
+  
+  void heap_sort_min(int arr[], int n) {
+    int t= n/2-1;
+    for (int i=t ; i>=0; i--)
+      heapify(arr, n, i);
+  
+    for (int i=n-1; i>=0; i--) {
+      swap(&arr[0], &arr[i]);
+  
+      heapify(arr, i, 0);
+    }
+  }
+  
+  
+  int main() {
+    int n,i,j,arr[100];
+
+    // for(i=0;i<7;i++){
+    //     arr[i]=rand()%50;
+    
+    printf("Enter the array elements(end with -1)\n");
+    for(j=0;;j++){
+        if(j<7)arr[j]=(rand() % (50 - 2 + 1)) + 2;
+        else
+        {scanf("%d",&arr[j]);
+        if(arr[j]==EOF)
+        break;}
+    }
+	
+    n = j;
+
+    printf("Previous array: ");
+    for (i = 0; i < 7; ++i)
+      printf("%d ", arr[i]);
+
+    printf("\nAdded array: ");
+    for (i = 0; i < n; ++i)
+      printf("%d ", arr[i]);
+
+    heap_sort_min(arr, n);
+
+    printf("\n\nSorted array: ");
+
+    for (i = 0; i < n; ++i)
+      printf("%d ", arr[i]);
+  
+    
+  }
